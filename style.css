@@ -1,124 +1,418 @@
+/* ============================================================
+   Variáveis de tipo
+   ============================================================ */
 :root {
-	--normal: #d8d8cb;
-	--fire: #f7bf97;
-	--water: #96afe9;
-	--electric: #ffe88d;
-	--grass: #caeebb;
-	--ice: #c8dddd;
-	--fighting: #f7a39f;
-	--poison: #daacda;
-	--ground: #e0cd98;
-	--flying: #c2b3f0;
-	--psychic: #ff9bb9;
-	--bug: #e6ebb3;
-	--rock: #c9bf97;
-	--ghost: #bb9ee7;
-	--dragon: #b99aff;
-	--dark: #b1a7a7;
-	--steel: #bebecf;
-	--fairy: #fcd1df;
+  --normal:   #d8d8cb;
+  --fire:     #f7bf97;
+  --water:    #96afe9;
+  --electric: #ffe88d;
+  --grass:    #caeebb;
+  --ice:      #c8dddd;
+  --fighting: #f7a39f;
+  --poison:   #daacda;
+  --ground:   #e0cd98;
+  --flying:   #c2b3f0;
+  --psychic:  #ff9bb9;
+  --bug:      #e6ebb3;
+  --rock:     #c9bf97;
+  --ghost:    #bb9ee7;
+  --dragon:   #b99aff;
+  --dark:     #b1a7a7;
+  --steel:    #bebecf;
+  --fairy:    #fcd1df;
 }
 
+/* ============================================================
+   Reset básico
+   ============================================================ */
 * {
-	box-sizing: border-box;
-	font-family: rubik;
+  box-sizing: border-box;
+  font-family: 'Rubik', sans-serif;
 }
 
 body {
-	background-image: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
-	color: white;
-	margin: 0;
+  background-image: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
+  margin: 0;
+  min-height: 100vh;
+  color: #222;
 }
 
+/* ============================================================
+   Layout
+   ============================================================ */
 .container {
-	padding: 40px;
-	margin: 0 auto;
+  padding: 40px;
+  margin: 0 auto;
+  max-width: 1400px;
 }
 
 h1 {
-	text-align: center;
-	font-size: 54px;
-	color: #222;
+  text-align: center;
+  font-size: 54px;
+  color: #222;
+  margin: 0 0 20px;
 }
 
 hr {
-	width: 600px;
-	margin-bottom: 50px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 50px;
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.15);
 }
 
+/* ============================================================
+   Grid de cards
+   ============================================================ */
 .pokedex {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-	gap: 20px;
-	padding-inline-start: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .card {
-	list-style: none;
-	padding: 40px;
-	color: #222;
-	text-align: center;
-	border-radius: 20px;
-	position: relative;
-	box-shadow: 20px 20px 15px -22px rgba(0, 0, 0, 0.51);
-	cursor: pointer;
-	transition: transform 0.3s;
+  list-style: none;
+  padding: 40px;
+  color: #222;
+  text-align: center;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 20px 20px 15px -22px rgba(0, 0, 0, 0.51);
+  cursor: pointer;
+  transition: transform 0.3s;
 }
 
 .card:hover {
-	animation: bounce 0.5s linear;
+  animation: bounce 0.5s linear;
 }
 
 .card::after {
-	content: "";
-	display: block;
-	width: 50%;
-	height: 30%;
-	border-radius: 26% 74% 67% 33% / 44% 25% 75% 56%;
-	background-color: #fff;
-	opacity: 0.7;
-	position: absolute;
-	top: 15%;
-	left: 25%;
+  content: "";
+  display: block;
+  width: 50%;
+  height: 30%;
+  border-radius: 26% 74% 67% 33% / 44% 25% 75% 56%;
+  background-color: #fff;
+  opacity: 0.7;
+  position: absolute;
+  top: 15%;
+  left: 25%;
 }
 
 .card-title {
-	text-transform: capitalize;
-	margin-bottom: 0;
-	font-size: 25px;
-	font-weight: normal;
-	position: relative;
-	z-index: 2;
+  text-transform: capitalize;
+  margin-bottom: 0;
+  font-size: 25px;
+  font-weight: normal;
+  position: relative;
+  z-index: 2;
 }
 
 .card-subtitle {
-	margin-top: 5px;
-	color: #444;
-	font-weight: lighter;
-	position: relative;
-	z-index: 2;
+  margin-top: 5px;
+  color: #444;
+  font-weight: 300;
+  position: relative;
+  z-index: 2;
 }
 
 .card-image {
-	height: 180px;
-	position: relative;
-	z-index: 2;
+  height: 180px;
+  position: relative;
+  z-index: 2;
+  /* background leve ajuda sprites transparentes a aparecerem bem */
+  background: rgba(255,255,255,0.35);
+  border-radius: 50%;
+  padding: 6px;
 }
 
+.card:focus-visible {
+  outline: 3px solid #222;
+  outline-offset: 4px;
+}
+
+.card.hidden { display: none; }
+
 @keyframes bounce {
-	20% {
-		transform: translateY(-6px);
-	}
+  20%  { transform: translateY(-6px); }
+  40%  { transform: translateY(0); }
+  80%  { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
 
-	40% {
-		transform: translateY(0px);
-	}
+/* ============================================================
+   Controles (busca + filtros)
+   ============================================================ */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+}
 
-	80% {
-		transform: translateY(-2px);
-	}
+#search {
+  flex: 1 1 280px;
+  max-width: 420px;
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+}
 
-	100% {
-		transform: translateY(0);
-	}
+#search:focus { border-color: #96afe9; }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  flex: 1 1 100%;
+}
+
+.type-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: capitalize;
+  color: #222;
+  transition: transform 0.15s, outline 0.15s;
+  outline: 2px solid transparent;
+}
+
+.type-btn:hover { transform: scale(1.05); }
+.type-btn[aria-pressed="true"] {
+  outline: 2px solid #222;
+  transform: scale(1.05);
+}
+
+.clear-btn {
+  padding: 8px 16px;
+  border: 2px solid #222;
+  background: transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #222;
+  transition: background 0.15s, color 0.15s;
+}
+
+.clear-btn:hover { background: #222; color: #fff; }
+
+/* ============================================================
+   Status / loader
+   ============================================================ */
+.status-bar {
+  text-align: center;
+  margin-bottom: 24px;
+  min-height: 30px;
+}
+
+.status {
+  color: #444;
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+
+#loader {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  height: 8px;
+  margin: 0 auto;
+  border-radius: 4px;
+  overflow: hidden;
+  appearance: none;
+  border: none;
+}
+#loader[hidden] { display: none; }
+#loader::-webkit-progress-bar { background: #eee; border-radius: 4px; }
+#loader::-webkit-progress-value {
+  background: linear-gradient(90deg, #96afe9, #f7bf97);
+  border-radius: 4px;
+  transition: width 0.2s;
+}
+#loader::-moz-progress-bar {
+  background: linear-gradient(90deg, #96afe9, #f7bf97);
+  border-radius: 4px;
+}
+
+/* ============================================================
+   Sentinel / fim da lista
+   ============================================================ */
+#sentinel { height: 1px; }
+
+.end-message {
+  text-align: center;
+  color: #666;
+  padding: 40px 20px;
+  font-size: 16px;
+}
+
+/* ============================================================
+   Modal de detalhes
+   ============================================================ */
+.modal {
+  border: none;
+  border-radius: 24px;
+  padding: 0;
+  max-width: 520px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+  background: #fff;
+  color: #222;
+}
+
+.modal::backdrop {
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  color: #222;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  transition: background 0.15s;
+}
+
+.modal-close:hover { background: rgba(0,0,0,0.08); }
+
+.modal-content {
+  padding: 40px 30px 30px;
+  text-align: center;
+  color: #222;
+}
+
+.modal-image {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 10px;
+  display: block;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.03);
+}
+
+.modal-content h2 {
+  text-transform: capitalize;
+  font-size: 30px;
+  margin: 10px 0 4px;
+}
+
+.modal-types {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.modal-types span {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: capitalize;
+  color: #222;
+}
+
+.modal-section {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.modal-section h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.modal-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.modal-section li {
+  background: #f0f0f0;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 40px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.stat-row strong { text-align: right; }
+
+.stat-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #eee;
+  overflow: hidden;
+}
+
+.stat-bar > div {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s;
+}
+
+.modal-link {
+  display: inline-block;
+  margin-top: 24px;
+  color: #96afe9;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.modal-link:hover { text-decoration: underline; }
+
+/* ============================================================
+   Responsivo — ÚNICO media query no final
+   ============================================================ */
+@media (max-width: 600px) {
+  .container { padding: 20px; }
+  h1 { font-size: 36px; }
+  hr { margin-bottom: 30px; }
+  .card { padding: 24px; }
+  .card-title { font-size: 20px; }
+  .card-image { height: 140px; }
+  .modal-content { padding: 32px 20px 24px; }
+  .modal-image { width: 160px; height: 160px; }
+  .modal-content h2 { font-size: 24px; }
+  .stat-row { grid-template-columns: 80px 1fr 35px; font-size: 13px; }
 }

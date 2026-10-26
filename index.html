@@ -1,25 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
-  <title>PokeDex</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokédex</title>
   <link rel="stylesheet" href="./style.css" />
-  <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🦁</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦁</text></svg>">
 </head>
-
 <body>
-
   <div class="container">
-    <h1>Pokedex Completa</h1>
+    <h1>Pokédex Completa</h1>
     <hr>
-    <ul data-js="pokedex" class="pokedex"></ul>
-    <ul class="pokedex" data-js="pokedex"></ul>
+
+    <div class="controls">
+      <input type="search" id="search" placeholder="Buscar por nome ou ID..." aria-label="Buscar Pokémon" autocomplete="off" />
+      <div class="filters" id="type-filters" role="group" aria-label="Filtrar por tipo"></div>
+      <button id="clear-filters" class="clear-btn" hidden>Limpar filtros</button>
+    </div>
+
+    <div class="status-bar">
+      <p id="status" class="status" role="status" aria-live="polite">Carregando...</p>
+      <progress id="loader" max="100" value="0" hidden></progress>
+    </div>
+
+    <ul data-js="pokedex" class="pokedex" aria-label="Lista de Pokémon"></ul>
+
+    <!-- Sentinel para scroll infinito -->
+    <div id="sentinel" aria-hidden="true"></div>
+    <p id="end-message" class="end-message" hidden>🎉 Você viu todos os Pokémon!</p>
   </div>
 
-  <script src="./app.js"></script>
-</body>
+  <!-- Modal de detalhes -->
+  <dialog id="pokemon-modal" class="modal" aria-labelledby="modal-title">
+    <button class="modal-close" aria-label="Fechar">×</button>
+    <div class="modal-content"></div>
+  </dialog>
 
+  <script type="module" src="./app.js"></script>
+</body>
 </html>

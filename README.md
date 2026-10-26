@@ -19,6 +19,7 @@ This project is a simple Pokemon Pokedex web application that fetches Pokemon da
 To use and run this project locally, follow the steps below:
 
 1. **Clone the Repository:**
+
    ```bash
    git clone https://github.com/vncsmnl/pokedex
    cd [repository_directory]
