@@ -81,11 +81,16 @@ describe('cache', () => {
       expect(localStorage.getItem(CACHE_KEY)).toBeNull();
     });
 
-    it('saveToCache não lança se localStorage falhar', () => {
+    it('saveToCache não lança se localStorage falhar (mas avisa)', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
-        throw new Error('QuotaExceeded');
-      });
-      expect(() => saveToCache(normalized)).not.toThrow();
+      throw new Error('QuotaExceeded');
+    });
+
+    expect(() => saveToCache(normalized)).not.toThrow();
+    expect(warnSpy).toHaveBeenCalledWith('Cache indisponível:', expect.any(Error));
+
+      warnSpy.mockRestore();
     });
   });
 });

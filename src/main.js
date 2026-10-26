@@ -23,6 +23,7 @@ import { setStatus, showLoader } from './render.js';
 import { initFilters, applyFilters, updateClearButton } from './filters.js';
 import { initModal, indexPokemons } from './modal.js';
 import { initInfiniteScroll, resetScroll, showEndMessage } from './infinite-scroll.js';
+import { initTheme } from './theme.js';
 
 /**
  * Converte a resposta crua da PokeAPI no formato interno normalizado.
@@ -113,6 +114,7 @@ const bootstrap = async () => {
  * Amarra todos os módulos. Chamado uma vez, no carregamento do script.
  */
 const init = () => {
+  initTheme();   
   // Filtros mudam o state; refresh() reconcilia DOM
   initFilters(() => refresh());
 

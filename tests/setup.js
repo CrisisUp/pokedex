@@ -5,6 +5,25 @@
 
 import { beforeEach, vi } from 'vitest';
 
+// jsdom NÃO implementa window.matchMedia (API de browser).
+// Sem este mock, qualquer código que chame matchMedia (como theme.js) quebra.
+// Simulamos o comportamento mínimo: retorna um objeto com matches=false,
+// addEventListener/addListener como no-op, e removeEventListener/removeListener idem.
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  configurable: true,
+  value: (query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    addListener: vi.fn(),      // API legada (Safari antigo)
+    removeListener: vi.fn(),   // API legada
+    dispatchEvent: vi.fn(),
+  }),
+});
+
 // jsdom fornece localStorage, mas resetamos entre testes para evitar
 // "vazamento" de estado de um teste para outro.
 beforeEach(() => {

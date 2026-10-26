@@ -416,3 +416,111 @@ hr {
   .modal-content h2 { font-size: 24px; }
   .stat-row { grid-template-columns: 80px 1fr 35px; font-size: 13px; }
 }
+
+/* ============================================================
+   Tema — variáveis de superfície (light padrão)
+   ============================================================ */
+:root {
+  --bg-gradient-start: #e3fdf5;
+  --bg-gradient-end:   #ffe6fa;
+  --surface:           #ffffff;
+  --surface-muted:     #f0f0f0;
+  --text-primary:      #222;
+  --text-secondary:    #444;
+  --text-muted:        #666;
+  --border:            #ddd;
+  --card-overlay:      rgba(255,255,255,0.7);
+  --shadow:            rgba(0, 0, 0, 0.51);
+  --focus-ring:        #222;
+}
+
+:root[data-theme="dark"] {
+  --bg-gradient-start: #1a1a2e;
+  --bg-gradient-end:   #16213e;
+  --surface:           #252536;
+  --surface-muted:     #2f2f45;
+  --text-primary:      #e8e8f0;
+  --text-secondary:    #b8b8c8;
+  --text-muted:        #9090a8;
+  --border:            #3a3a52;
+  --card-overlay:      rgba(255,255,255,0.15);
+  --shadow:            rgba(0, 0, 0, 0.7);
+  --focus-ring:        #96afe9;
+}
+
+/* ============================================================
+   Aplicação do tema nos componentes existentes
+   ============================================================ */
+body {
+  background-image: linear-gradient(-225deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  color: var(--text-primary);
+  transition: background-image 0.3s, color 0.3s;
+}
+
+h1 { color: var(--text-primary); }
+hr { border-top-color: var(--border); }
+
+.card {
+  color: var(--text-primary);
+  box-shadow: 20px 20px 15px -22px var(--shadow);
+}
+.card::after { background-color: var(--card-overlay); }
+.card-subtitle { color: var(--text-secondary); }
+
+.card:focus-visible,
+.card:focus { outline-color: var(--focus-ring); }
+
+.status { color: var(--text-secondary); }
+.end-message { color: var(--text-muted); }
+
+#search {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+#search::placeholder { color: var(--text-muted); }
+
+.clear-btn { border-color: var(--text-primary); color: var(--text-primary); }
+.clear-btn:hover { background: var(--text-primary); color: var(--surface); }
+
+#loader::-webkit-progress-bar { background: var(--surface-muted); }
+
+.modal {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+.modal-content { color: var(--text-primary); }
+.modal-section h3 { color: var(--text-muted); }
+.modal-section li { background: var(--surface-muted); color: var(--text-primary); }
+.modal-close { color: var(--text-primary); }
+.modal-close:hover { background: var(--card-overlay); }
+.stat-bar { background: var(--surface-muted); }
+.modal-link { color: var(--focus-ring); }
+
+/* ============================================================
+   Botão de toggle
+   ============================================================ */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: 22px;
+  display: grid;
+  place-items: center;
+  z-index: 100;
+  transition: transform 0.2s, background 0.3s, border-color 0.3s;
+  box-shadow: 0 4px 12px var(--shadow);
+}
+.theme-toggle:hover { transform: scale(1.1); }
+.theme-toggle:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+
+/* Responsivo: em telas pequenas, o botão pode sobrepor o h1 — reduz e reposiciona */
+@media (max-width: 600px) {
+  .theme-toggle { top: 12px; right: 12px; width: 40px; height: 40px; font-size: 18px; }
+}
